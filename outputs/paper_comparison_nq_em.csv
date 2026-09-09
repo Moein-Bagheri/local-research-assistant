@@ -1,0 +1,5 @@
+﻿Paper,Reported variant,NQ test EM,PDF source
+FiD,FiD-large (770M),51.4,"FiD PDF p.3, Table 1"
+RAG,RAG-Sequence,44.5,"RAG PDF p.6, Table 1"
+DPR,Single DPR,41.5,"DPR PDF p.8, Table 4"
+REALM,REALM-CC-News,40.4,"REALM PDF p.7, Table 1"

@@ -1,0 +1,13 @@
+﻿question,expected_tool,predicted_tool,route_source,correct,latency_seconds
+Compare the results of all papers and draw a chart.,compare_results,compare_results,llm_tool_call,1,0.24540830007754266
+مقایسه نتایج چهار مقاله و نمودار را بساز,compare_results,compare_results,llm_tool_call,1,0.3025807000230998
+Extract the experimental metrics from the papers.,extract_experimental_results,extract_experimental_results,llm_tool_call,1,0.26340349996462464
+معیارها و نتایج تجربی مقاله‌ها را استخراج کن,extract_experimental_results,extract_experimental_results,llm_tool_call,1,0.2611958999186754
+Generate a mini survey of the selected papers.,generate_survey,generate_survey,llm_tool_call,1,0.30624209996312857
+یک مرور کوتاه از چهار مقاله بساز,generate_survey,generate_survey,llm_tool_call,1,0.300194300012663
+Find research gaps and future work.,find_research_gap,find_research_gap,llm_tool_call,1,0.1947862000670284
+شکاف پژوهشی و کارهای آینده چیست؟,find_research_gap,find_research_gap,deterministic_fallback,1,0.583724900148809
+Compare references by publication year.,compare_references,compare_references,llm_tool_call,1,0.17876609996892512
+منابع مقاله‌ها را بر اساس سال مقایسه کن,compare_references,compare_references,llm_tool_call,1,0.18282289989292622
+Compare the limitations of all methods.,compare_limitations,compare_limitations,llm_tool_call,1,0.18930450011976063
+محدودیت‌ها و نقاط ضعف روش‌ها را مقایسه کن,compare_limitations,compare_limitations,llm_tool_call,1,0.18895519990473986

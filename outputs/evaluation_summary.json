@@ -1,0 +1,64 @@
+{
+  "configuration": {
+    "llm_model": "qwen2.5:1.5b",
+    "embedding_model": "all-minilm",
+    "chunk_words": 80,
+    "chunk_overlap": 15,
+    "online_retrieval_top_k": 3,
+    "relevance_threshold": 0.47,
+    "vector_database": "FAISS IndexFlatIP",
+    "similarity": "cosine (L2 normalization + inner product)",
+    "seed": 42
+  },
+  "embedding_and_clustering": {
+    "chunk_count": 488,
+    "embedding_dimension": 384,
+    "pca_explained_variance_2d": 0.1188,
+    "kmeans_best_k": 2,
+    "kmeans_best_silhouette": 0.0638,
+    "cluster_purity_by_paper": 0.3381,
+    "chunk_length_mean": 73.26,
+    "chunk_length_q1": 80.0,
+    "chunk_length_q3": 80.0,
+    "chunk_length_iqr_outliers": 101
+  },
+  "retrieval_and_ood": {
+    "retrieval_top1_paper_accuracy": 0.85,
+    "retrieval_hit_at_3": 1.0,
+    "retrieval_precision_at_3": 0.8167,
+    "retrieval_recall_at_3": 0.9625,
+    "retrieval_f1_at_3": 0.8512,
+    "mean_retrieval_latency_ms": 49.96,
+    "calibrated_threshold": 0.4698,
+    "held_out_ood_detection": {
+      "accuracy": 1.0,
+      "precision": 1.0,
+      "f1": 1.0
+    },
+    "held_out_ood_with_configured_threshold": {
+      "accuracy": 1.0,
+      "precision": 1.0,
+      "f1": 1.0
+    },
+    "calibration_rows": 15,
+    "held_out_rows": 15
+  },
+  "function_routing": {
+    "accuracy": 1.0,
+    "mean_latency_seconds": 0.266,
+    "llm_tool_call_count": 11,
+    "fallback_count": 1
+  },
+  "generation": {
+    "no_rag": {
+      "answer_containment_accuracy": 0.0833,
+      "mean_token_f1": 0.0972,
+      "mean_latency_seconds": 0.116
+    },
+    "rag": {
+      "answer_containment_accuracy": 0.75,
+      "mean_token_f1": 0.7083,
+      "mean_latency_seconds": 0.232
+    }
+  }
+}

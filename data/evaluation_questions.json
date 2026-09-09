@@ -1,0 +1,212 @@
+{
+  "retrieval_questions": [
+    {
+      "id": "r01",
+      "question": "What Natural Questions test Exact Match does REALM-CC-News report?",
+      "relevant_papers": ["realm"],
+      "answer_aliases": ["40.4"]
+    },
+    {
+      "id": "r02",
+      "question": "How many documents does REALM retrieve for open-domain question answering?",
+      "relevant_papers": ["realm"],
+      "answer_aliases": ["5", "five"]
+    },
+    {
+      "id": "r03",
+      "question": "What corpus date and block representation are used in REALM's Wikipedia knowledge retriever?",
+      "relevant_papers": ["realm"],
+      "answer_aliases": ["2018", "288"]
+    },
+    {
+      "id": "r04",
+      "question": "How does REALM refresh its document index while pre-training?",
+      "relevant_papers": ["realm"],
+      "answer_aliases": ["refresh", "index"]
+    },
+    {
+      "id": "r05",
+      "question": "How many Wikipedia passages are indexed by DPR?",
+      "relevant_papers": ["dpr"],
+      "answer_aliases": ["21,015,324", "21 million"]
+    },
+    {
+      "id": "r06",
+      "question": "What passage length and overlap does DPR use when splitting Wikipedia?",
+      "relevant_papers": ["dpr"],
+      "answer_aliases": ["100 words", "non-overlapping"]
+    },
+    {
+      "id": "r07",
+      "question": "Which negatives made DPR training most effective?",
+      "relevant_papers": ["dpr"],
+      "answer_aliases": ["in-batch", "BM25"]
+    },
+    {
+      "id": "r08",
+      "question": "What are DPR's Natural Questions retrieval Top-20 and Top-100 test accuracies?",
+      "relevant_papers": ["dpr"],
+      "answer_aliases": ["78.4", "85.4"]
+    },
+    {
+      "id": "r09",
+      "question": "What Natural Questions test Exact Match is reported for Single DPR?",
+      "relevant_papers": ["dpr"],
+      "answer_aliases": ["41.5"]
+    },
+    {
+      "id": "r10",
+      "question": "What is the difference between RAG-Sequence and RAG-Token?",
+      "relevant_papers": ["rag"],
+      "answer_aliases": ["sequence", "token", "document"]
+    },
+    {
+      "id": "r11",
+      "question": "Which generator and retriever are combined in RAG?",
+      "relevant_papers": ["rag"],
+      "answer_aliases": ["BART", "DPR"]
+    },
+    {
+      "id": "r12",
+      "question": "What Natural Questions Exact Match does RAG-Sequence report?",
+      "relevant_papers": ["rag"],
+      "answer_aliases": ["44.5"]
+    },
+    {
+      "id": "r13",
+      "question": "Why can RAG update knowledge without retraining all model parameters?",
+      "relevant_papers": ["rag"],
+      "answer_aliases": ["index", "external", "memory"]
+    },
+    {
+      "id": "r14",
+      "question": "How does Fusion-in-Decoder combine evidence from multiple passages?",
+      "relevant_papers": ["fid"],
+      "answer_aliases": ["independently", "decoder", "concatenate"]
+    },
+    {
+      "id": "r15",
+      "question": "How many passages are used by the main FiD experiments?",
+      "relevant_papers": ["fid"],
+      "answer_aliases": ["100"]
+    },
+    {
+      "id": "r16",
+      "question": "What are the parameter counts of FiD-base and FiD-large?",
+      "relevant_papers": ["fid"],
+      "answer_aliases": ["220M", "770M"]
+    },
+    {
+      "id": "r17",
+      "question": "What Natural Questions Exact Match does FiD-large achieve?",
+      "relevant_papers": ["fid"],
+      "answer_aliases": ["51.4"]
+    },
+    {
+      "id": "r18",
+      "question": "What learning rate and optimizer are used to train FiD?",
+      "relevant_papers": ["fid"],
+      "answer_aliases": ["Adam", "1e-4"]
+    },
+    {
+      "id": "r19",
+      "question": "Which selected systems are extractive and which are generative?",
+      "relevant_papers": ["realm", "dpr", "rag", "fid"],
+      "answer_aliases": ["REALM", "DPR", "RAG", "FiD"]
+    },
+    {
+      "id": "r20",
+      "question": "How did open-domain Natural Questions Exact Match progress from REALM through DPR and RAG to FiD?",
+      "relevant_papers": ["realm", "dpr", "rag", "fid"],
+      "answer_aliases": ["40.4", "41.5", "44.5", "51.4"]
+    }
+  ],
+  "out_of_domain_questions": [
+    {"id": "o01", "question": "What is the weather in Tehran tomorrow?"},
+    {"id": "o02", "question": "Who won the 2026 FIFA World Cup?"},
+    {"id": "o03", "question": "Write a recipe for chocolate cake."},
+    {"id": "o04", "question": "What is the capital of Brazil?"},
+    {"id": "o05", "question": "How do I replace a flat bicycle tire?"},
+    {"id": "o06", "question": "Explain the symptoms of seasonal influenza."},
+    {"id": "o07", "question": "What is the current price of Bitcoin?"},
+    {"id": "o08", "question": "Translate 'good morning' into Japanese."},
+    {"id": "o09", "question": "How many moons does Mars have?"},
+    {"id": "o10", "question": "Give me a three-day travel plan for Rome."}
+  ],
+  "tool_routing_questions": [
+    {"question": "Compare the results of all papers and draw a chart.", "tool": "compare_results"},
+    {"question": "مقایسه نتایج چهار مقاله و نمودار را بساز", "tool": "compare_results"},
+    {"question": "Extract the experimental metrics from the papers.", "tool": "extract_experimental_results"},
+    {"question": "معیارها و نتایج تجربی مقاله‌ها را استخراج کن", "tool": "extract_experimental_results"},
+    {"question": "Generate a mini survey of the selected papers.", "tool": "generate_survey"},
+    {"question": "یک مرور کوتاه از چهار مقاله بساز", "tool": "generate_survey"},
+    {"question": "Find research gaps and future work.", "tool": "find_research_gap"},
+    {"question": "شکاف پژوهشی و کارهای آینده چیست؟", "tool": "find_research_gap"},
+    {"question": "Compare references by publication year.", "tool": "compare_references"},
+    {"question": "منابع مقاله‌ها را بر اساس سال مقایسه کن", "tool": "compare_references"},
+    {"question": "Compare the limitations of all methods.", "tool": "compare_limitations"},
+    {"question": "محدودیت‌ها و نقاط ضعف روش‌ها را مقایسه کن", "tool": "compare_limitations"}
+  ],
+  "generation_questions": [
+    {
+      "question": "What Natural Questions test Exact Match does REALM-CC-News report?",
+      "gold_answer": "40.4",
+      "aliases": ["40.4"]
+    },
+    {
+      "question": "How many Wikipedia passages are indexed by DPR?",
+      "gold_answer": "21 million passages",
+      "aliases": ["21 million", "21,015,324", "21015324"]
+    },
+    {
+      "question": "How long is each DPR Wikipedia passage?",
+      "gold_answer": "100 words",
+      "aliases": ["100 words", "100-word"]
+    },
+    {
+      "question": "What Natural Questions test Exact Match is reported for Single DPR?",
+      "gold_answer": "41.5",
+      "aliases": ["41.5"]
+    },
+    {
+      "question": "Which sequence-to-sequence generator is used by RAG?",
+      "gold_answer": "BART-large",
+      "aliases": ["BART-large", "BART large", "BART"]
+    },
+    {
+      "question": "What Natural Questions Exact Match does RAG-Sequence report?",
+      "gold_answer": "44.5",
+      "aliases": ["44.5"]
+    },
+    {
+      "question": "How many documents does RAG-Sequence use at test time for open-domain QA?",
+      "gold_answer": "50 documents",
+      "aliases": ["50 documents", "50 passages", "50"]
+    },
+    {
+      "question": "How many passages are used by the main FiD experiments?",
+      "gold_answer": "100 passages",
+      "aliases": ["100 passages", "100"]
+    },
+    {
+      "question": "How many parameters does FiD-large have?",
+      "gold_answer": "770 million parameters",
+      "aliases": ["770M", "770 million"]
+    },
+    {
+      "question": "What Natural Questions Exact Match does FiD-large achieve?",
+      "gold_answer": "51.4",
+      "aliases": ["51.4"]
+    },
+    {
+      "question": "Which optimizer is used to train FiD?",
+      "gold_answer": "Adam",
+      "aliases": ["Adam"]
+    },
+    {
+      "question": "Which vector search library is used by DPR?",
+      "gold_answer": "FAISS",
+      "aliases": ["FAISS"]
+    }
+  ]
+}

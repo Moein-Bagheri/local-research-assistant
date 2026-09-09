@@ -1,0 +1,31 @@
+﻿id,question,label_in_domain,top_score,top1_paper,top3_papers,latency_ms,relevant_papers
+r01,What Natural Questions test Exact Match does REALM-CC-News report?,1,0.7718002200126648,realm,"realm,dpr,realm",866.5746999904513,realm
+r02,How many documents does REALM retrieve for open-domain question answering?,1,0.635168194770813,realm,"realm,realm,realm",30.65309999510646,realm
+r03,What corpus date and block representation are used in REALM's Wikipedia knowledge retriever?,1,0.6100673675537109,realm,"realm,realm,realm",37.670299876481295,realm
+r04,How does REALM refresh its document index while pre-training?,1,0.6047037839889526,realm,"realm,realm,realm",18.92330008558929,realm
+r05,How many Wikipedia passages are indexed by DPR?,1,0.5869269967079163,realm,"realm,dpr,realm",30.40669998154044,dpr
+r06,What passage length and overlap does DPR use when splitting Wikipedia?,1,0.5590802431106567,rag,"rag,dpr,dpr",22.35920005477965,dpr
+r07,Which negatives made DPR training most effective?,1,0.5919021368026733,dpr,"dpr,dpr,dpr",18.94059986807406,dpr
+r08,What are DPR's Natural Questions retrieval Top-20 and Top-100 test accuracies?,1,0.6432334184646606,dpr,"dpr,dpr,dpr",19.772700034081936,dpr
+r09,What Natural Questions test Exact Match is reported for Single DPR?,1,0.7774983644485474,dpr,"dpr,rag,fid",16.890499973669648,dpr
+r10,What is the difference between RAG-Sequence and RAG-Token?,1,0.5881462097167969,rag,"rag,rag,rag",16.007199883461,rag
+r11,Which generator and retriever are combined in RAG?,1,0.5889308452606201,rag,"rag,rag,rag",15.78960008919239,rag
+r12,What Natural Questions Exact Match does RAG-Sequence report?,1,0.7250820398330688,rag,"rag,rag,rag",25.200300151482224,rag
+r13,Why can RAG update knowledge without retraining all model parameters?,1,0.5322898626327515,rag,"rag,rag,rag",16.880499897524714,rag
+r14,How does Fusion-in-Decoder combine evidence from multiple passages?,1,0.7279614806175232,fid,"fid,fid,fid",15.402500052005053,fid
+r15,How many passages are used by the main FiD experiments?,1,0.472847580909729,fid,"fid,dpr,fid",25.47180000692606,fid
+r16,What are the parameter counts of FiD-base and FiD-large?,1,0.5793875455856323,fid,"fid,fid,rag",18.55999999679625,fid
+r17,What Natural Questions Exact Match does FiD-large achieve?,1,0.6538711786270142,fid,"fid,fid,realm",23.292899830266833,fid
+r18,What learning rate and optimizer are used to train FiD?,1,0.47769397497177124,dpr,"dpr,realm,fid",23.127199849113822,fid
+r19,Which selected systems are extractive and which are generative?,1,0.47466135025024414,fid,"fid,realm,rag",18.10240000486374,"realm,dpr,rag,fid"
+r20,How did open-domain Natural Questions Exact Match progress from REALM through DPR and RAG to FiD?,1,0.5920628309249878,realm,"realm,realm,rag",21.843799855560064,"realm,dpr,rag,fid"
+o01,What is the weather in Tehran tomorrow?,0,0.20380523800849915,realm,"realm,rag,dpr",28.77610013820231,
+o02,Who won the 2026 FIFA World Cup?,0,0.30575329065322876,rag,"rag,rag,fid",28.755800100043416,
+o03,Write a recipe for chocolate cake.,0,0.173719584941864,realm,"realm,rag,rag",29.56379996612668,
+o04,What is the capital of Brazil?,0,0.1554701030254364,fid,"fid,rag,rag",19.85500007867813,
+o05,How do I replace a flat bicycle tire?,0,0.1396699845790863,dpr,"dpr,realm,realm",17.11679995059967,
+o06,Explain the symptoms of seasonal influenza.,0,0.2630949914455414,rag,"rag,rag,rag",17.423100071027875,
+o07,What is the current price of Bitcoin?,0,0.22129058837890625,realm,"realm,dpr,realm",18.74520001001656,
+o08,Translate 'good morning' into Japanese.,0,0.27742305397987366,realm,"realm,rag,realm",22.632000036537647,
+o09,How many moons does Mars have?,0,0.32359641790390015,fid,"fid,rag,realm",16.98670000769198,
+o10,Give me a three-day travel plan for Rome.,0,0.1538265347480774,fid,"fid,rag,fid",17.154400004073977,

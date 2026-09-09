@@ -1,0 +1,25 @@
+﻿mode,question,gold_answer,answer,answer_containment,token_f1,latency_seconds
+no_rag,What Natural Questions test Exact Match does REALM-CC-News report?,40.4,Exact Match,0,0.0,0.10466319997794926
+rag,What Natural Questions test Exact Match does REALM-CC-News report?,40.4,40.4,1,1.0,0.23166629998013377
+no_rag,How many Wikipedia passages are indexed by DPR?,21 million passages,"35,000",0,0.0,0.12215969990938902
+rag,How many Wikipedia passages are indexed by DPR?,21 million passages,"21,015,324",1,1.0,0.264384200097993
+no_rag,How long is each DPR Wikipedia passage?,100 words,250 words,0,0.5,0.11197540001012385
+rag,How long is each DPR Wikipedia passage?,100 words,Each passage is 100 words long.,1,0.5,0.25806139991618693
+no_rag,What Natural Questions test Exact Match is reported for Single DPR?,41.5,Exact Match is reported as 100% for Single DPR.,0,0.0,0.1654151000548154
+rag,What Natural Questions test Exact Match is reported for Single DPR?,41.5,41.5,1,1.0,0.18834090000018477
+no_rag,Which sequence-to-sequence generator is used by RAG?,BART-large,Transformers,0,0.0,0.09927860018797219
+rag,Which sequence-to-sequence generator is used by RAG?,BART-large,BART-large,1,1.0,0.20247339992783964
+no_rag,What Natural Questions Exact Match does RAG-Sequence report?,44.5,RAG-Sequence reports exact matches of natural questions.,0,0.0,0.15227199997752905
+rag,What Natural Questions Exact Match does RAG-Sequence report?,44.5,44.5,1,1.0,0.2163909999653697
+no_rag,How many documents does RAG-Sequence use at test time for open-domain QA?,50 documents,1 document,0,0.0,0.0961856001522392
+rag,How many documents does RAG-Sequence use at test time for open-domain QA?,50 documents,10,0,0.0,0.21497309999540448
+no_rag,How many passages are used by the main FiD experiments?,100 passages,10,0,0.0,0.10545080015435815
+rag,How many passages are used by the main FiD experiments?,100 passages,100,1,1.0,0.17325069988146424
+no_rag,How many parameters does FiD-large have?,770 million parameters,30 billion,0,0.0,0.10667999996803701
+rag,How many parameters does FiD-large have?,770 million parameters,770M,1,1.0,0.21084289997816086
+no_rag,What Natural Questions Exact Match does FiD-large achieve?,51.4,Zero-shot classification,0,0.0,0.10025739995762706
+rag,What Natural Questions Exact Match does FiD-large achieve?,51.4,51.4%,1,1.0,0.22143759997561574
+no_rag,Which optimizer is used to train FiD?,Adam,Adam optimizer,1,0.6666666666666666,0.09465180011466146
+rag,Which optimizer is used to train FiD?,Adam,Maximal Information Pruning (MIPS),0,0.0,0.242373300017789
+no_rag,Which vector search library is used by DPR?,FAISS,DPR uses Elasticsearch for vector search.,0,0.0,0.13404379994608462
+rag,Which vector search library is used by DPR?,FAISS,"Dense vector representations for reiteration. Starting from our trained DPR model, trieval has a long history since Latent Semantic they show that the retrieval performance can be",0,0.0,0.36370500014163554

@@ -1,0 +1,10 @@
+faiss-cpu==1.13.2
+matplotlib==3.10.8
+numpy==2.2.6
+pandas==2.3.3
+PyMuPDF==1.26.7
+requests==2.32.5
+scikit-learn==1.7.2
+streamlit==1.53.1
+pytest==9.0.2
+

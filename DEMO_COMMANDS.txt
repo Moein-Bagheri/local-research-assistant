@@ -1,0 +1,31 @@
+PREPARE (run before recording)
+========================================
+Set-ExecutionPolicy -Scope Process Bypass
+ollama list
+.\.venv\Scripts\python -m pytest -q
+
+START THE REQUIRED CLI DEMO
+========================================
+.\run_demo.ps1
+
+Paste these questions one at a time:
+
+What Natural Questions test Exact Match is reported for Single DPR?
+
+How does Fusion-in-Decoder combine evidence from multiple passages?
+
+Compare the results of all papers and draw a chart.
+
+Find research gaps and future work.
+
+What is the weather in Tehran tomorrow?
+
+Exit the CLI:
+
+/quit
+
+OPTIONAL STREAMLIT DEMO
+========================================
+.\.venv\Scripts\python -m streamlit run app.py
+
+Stop Streamlit with Ctrl+C.

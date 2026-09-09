@@ -1,0 +1,171 @@
+{
+  "selection_note": "The original Self-RAG PDF is retained as supplementary reading but excluded from the four-paper numeric core because its TriviaQA answer-containment accuracy is not the same as strict Exact Match. DPR was added so all four core papers share Natural Questions test Exact Match.",
+  "core_comparison": {
+    "dataset": "Natural Questions (open-domain QA)",
+    "split": "standard test split (minor 3610/3611 preprocessing-version discrepancy is documented)",
+    "metric": "Exact Match (normalized answer-level EM; higher is better)",
+    "rows": [
+      {
+        "paper": "REALM",
+        "variant": "REALM-CC-News",
+        "nq_em": 40.4,
+        "source": "REALM PDF p.7, Table 1"
+      },
+      {
+        "paper": "DPR",
+        "variant": "Single DPR",
+        "nq_em": 41.5,
+        "source": "DPR PDF p.8, Table 4"
+      },
+      {
+        "paper": "RAG",
+        "variant": "RAG-Sequence",
+        "nq_em": 44.5,
+        "source": "RAG PDF p.6, Table 1"
+      },
+      {
+        "paper": "FiD",
+        "variant": "FiD-large (770M)",
+        "nq_em": 51.4,
+        "source": "FiD PDF p.3, Table 1"
+      }
+    ],
+    "comparability_caveats": [
+      "All rows use Natural Questions open-domain test and answer Exact Match.",
+      "REALM uses roughly 13M blocks up to 288 wordpieces and top-5 retrieval; DPR/RAG/FiD generally use the December 2018 Wikipedia corpus split into roughly 21M non-overlapping 100-word passages.",
+      "REALM and DPR are extractive readers, whereas RAG and FiD are generative.",
+      "The retrieval budget and model capacity change across rows, so the trend is descriptive rather than a controlled ablation."
+    ]
+  },
+  "auxiliary_metrics": [
+    {
+      "Paper": "DPR",
+      "Dataset/split": "Natural Questions test",
+      "Metric": "Retrieval Hit@20",
+      "Value": 78.4,
+      "Source": "DPR PDF p.5, Table 2"
+    },
+    {
+      "Paper": "DPR",
+      "Dataset/split": "Natural Questions test",
+      "Metric": "Retrieval Hit@100",
+      "Value": 85.4,
+      "Source": "DPR PDF p.5, Table 2"
+    },
+    {
+      "Paper": "RAG",
+      "Dataset/split": "TriviaQA test",
+      "Metric": "Exact Match",
+      "Value": 56.8,
+      "Source": "RAG PDF p.6, Table 1"
+    },
+    {
+      "Paper": "FiD",
+      "Dataset/split": "TriviaQA open-domain",
+      "Metric": "Exact Match",
+      "Value": 67.6,
+      "Source": "FiD PDF p.3, Table 1"
+    },
+    {
+      "Paper": "FiD",
+      "Dataset/split": "SQuAD Open",
+      "Metric": "Token F1",
+      "Value": 63.2,
+      "Source": "FiD PDF p.3, Table 1"
+    }
+  ],
+  "papers": {
+    "realm": {
+      "short_name": "REALM",
+      "title": "REALM: Retrieval-Augmented Language Model Pre-Training",
+      "year": 2020,
+      "method_summary": "Jointly pre-trains a neural retriever and a masked-language-model knowledge augmenter over an external corpus, then fine-tunes the model for open-domain QA.",
+      "retriever": "BERT-style dense query/document encoders with maximum inner-product search over Wikipedia blocks",
+      "generator_or_reader": "BERT-style extractive QA reader / knowledge-augmented encoder",
+      "reported_variant": "REALM-CC-News",
+      "nq_test_em": 40.4,
+      "datasets": ["Natural Questions", "WebQuestions", "CuratedTREC"],
+      "limitations": [
+        "Index refresh and large-corpus pre-training are computationally expensive and hard to reproduce on student hardware.",
+        "The retriever, corpus snapshot, block size, and top-5 budget differ from later systems, so score gains are not a controlled architecture-only comparison.",
+        "The retrieved evidence is not presented as a user-facing citation trail."
+      ],
+      "future_work": [
+        "Use larger and more diverse external memories while updating them efficiently.",
+        "Improve latent retrieval supervision and joint optimization stability."
+      ]
+    },
+    "dpr": {
+      "short_name": "DPR",
+      "title": "Dense Passage Retrieval for Open-Domain Question Answering",
+      "year": 2020,
+      "method_summary": "Trains separate BERT question and passage encoders with in-batch and BM25 hard negatives, indexes 21M passage vectors in FAISS, and feeds retrieved passages to an extractive reader.",
+      "retriever": "Two BERT-base encoders, 768-dimensional dot-product vectors, FAISS HNSW",
+      "generator_or_reader": "BERT-base cross-encoder extractive reader",
+      "reported_variant": "Single DPR",
+      "nq_test_em": 41.5,
+      "datasets": ["Natural Questions", "TriviaQA", "WebQuestions", "CuratedTREC", "SQuAD Open"],
+      "limitations": [
+        "Retrieval Hit@K only checks whether an answer string occurs in a passage; accidental mentions can count as relevant.",
+        "Encoding and indexing about 21 million 768-dimensional passages needs substantial GPU time, RAM, and storage.",
+        "The extractive reader cannot freely synthesize evidence across multiple passages, and the corpus is fixed to Wikipedia 2018."
+      ],
+      "future_work": [
+        "Improve joint retriever-reader training and reduce the cost of index construction.",
+        "Combine dense semantic retrieval with sparse lexical signals for rare exact phrases."
+      ]
+    },
+    "rag": {
+      "short_name": "RAG",
+      "title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+      "year": 2020,
+      "method_summary": "Combines a DPR retriever with a BART generator and marginalizes over retrieved documents either once per output sequence (RAG-Sequence) or at every output token (RAG-Token).",
+      "retriever": "DPR question encoder over a fixed Wikipedia passage index",
+      "generator_or_reader": "BART-large sequence-to-sequence generator",
+      "reported_variant": "RAG-Sequence",
+      "nq_test_em": 44.5,
+      "datasets": ["Natural Questions", "TriviaQA", "WebQuestions", "CuratedTREC", "MS MARCO", "FEVER"],
+      "limitations": [
+        "The passage encoder and Wikipedia index are fixed during downstream training, limiting full end-to-end adaptation.",
+        "Generation and marginalization over documents add inference cost, while the paper does not provide user-facing evidence citations.",
+        "A static Wikipedia snapshot can become stale and retrieval errors can still propagate into generation."
+      ],
+      "future_work": [
+        "Jointly update the document encoder and index during task learning.",
+        "Apply retrieval-augmented generation to broader tasks and make provenance more explicit."
+      ]
+    },
+    "fid": {
+      "short_name": "FiD",
+      "title": "Leveraging Passage Retrieval with Generative Models for Open Domain Question Answering",
+      "year": 2021,
+      "method_summary": "Encodes each question-passage pair independently with T5, concatenates all encoder states, and lets one decoder fuse evidence from as many as 100 passages.",
+      "retriever": "DPR for Natural Questions/TriviaQA and BM25 for SQuAD Open",
+      "generator_or_reader": "T5-base (220M) or T5-large (770M) fusion-in-decoder generator",
+      "reported_variant": "FiD-large",
+      "nq_test_em": 51.4,
+      "datasets": ["Natural Questions", "TriviaQA", "SQuAD Open"],
+      "limitations": [
+        "Training with 100 passages is still heavy (the paper used 64 V100 GPUs), even though passage encoding scales linearly.",
+        "The retriever is not trained end-to-end with the generator and the passage encodings interact only in the decoder.",
+        "Evaluation focuses on short Wikipedia QA and Exact Match rather than explanation quality, provenance, or long-form factuality."
+      ],
+      "future_work": [
+        "Train retrieval jointly with the generative reader.",
+        "Improve computational efficiency as retrieval depth grows."
+      ]
+    }
+  },
+  "shared_research_gaps": [
+    "A lightweight way to update dense indexes when the corpus changes, without repeating full-corpus embedding.",
+    "A calibrated decision rule for when retrieval is necessary and when retrieved evidence is insufficient.",
+    "Faithful, page-level provenance: answer quality metrics such as EM do not prove that the generated explanation is supported.",
+    "Controlled comparisons that keep generator size, corpus snapshot, chunking, and top-k retrieval budget fixed.",
+    "Better handling of tables, formulas, multi-column PDF text, and cross-page evidence during real document ingestion."
+  ],
+  "supplementary_self_rag": {
+    "status": "kept as supplementary reading, not one of the four numeric core papers",
+    "reason": "Self-RAG evaluates TriviaQA with answer-containment accuracy, whereas FiD uses normalized strict Exact Match; 69.3 and 67.6 are therefore not directly comparable.",
+    "use_in_video": "Mention briefly as a later idea for adaptive retrieval and self-critique, and explain why it was excluded from the common-metric table."
+  }
+}
