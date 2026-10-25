@@ -1,124 +1,59 @@
-# Local Research Assistant
+# Local research assistant
 
-A local RAG application for exploring four research papers: REALM, DPR, RAG and FiD. Ask questions, retrieve supporting passages with PDF page references, and use research tools to compare the papers.
+**Can a small model answer questions about research papers without making things up?** With retrieval, much better. On 12 test questions, a 1.5B model running on a laptop went from 8% to 75% of answers containing the reference fact, each citing the PDF page it came from.
 
-Built with **Python, Ollama, Qwen2.5, FAISS and Streamlit** as a university data mining project.
+<img src="outputs/rag_vs_no_rag.png" width="520" alt="Bar chart: answer containment and token F1 rise from about 0.1 without retrieval to above 0.7 with retrieval">
 
-[توضیحات فارسی](README_FA.md) · [Saved demo outputs](outputs/demo_outputs.md) · [Paper setup](Researchs/README.md)
+*RAG · Ollama · Qwen2.5 · FAISS · Streamlit* · [Persian write-up](README_FA.md) · [Saved demo outputs](outputs/demo_outputs.md)
 
-![Architecture of the local research assistant](outputs/architecture.png)
+## What I did
 
-## Features
+- Indexed four retrieval papers (REALM, DPR, RAG, FiD): section-aware PDF extraction with PyMuPDF, then 488 chunks of 80 words with 15 words of overlap.
+- Embedded the chunks locally (`all-minilm`, 384 dimensions) into FAISS and retrieved the top three by cosine similarity.
+- Answered with Qwen2.5 1.5B through Ollama, citing PDF pages. Questions outside the papers fall back to a clearly labelled general answer, past a calibrated similarity threshold.
+- Routed requests to six research tools (compare results, write a mini survey, list research gaps, compare reference years and more), with a keyword fallback when the model's tool call is invalid.
+- Built a command line and a Streamlit interface.
 
-- Extract PDF text by page and section, then divide it into overlapping chunks.
-- Generate local embeddings with `all-minilm` and retrieve passages using FAISS cosine similarity.
-- Answer questions with `qwen2.5:1.5b` and references to retrieved PDF pages.
-- Route requests to six research tools, with a keyword fallback when the model does not return a valid tool call.
-- Offer a separately labelled general-model response when relevant evidence is unavailable.
-- Provide both a command-line interface and a Streamlit interface.
+<img src="outputs/architecture.png" width="720" alt="Pipeline: papers, PDF extraction, chunking, local embeddings, FAISS, top three chunks, Qwen2.5, with an out-of-scope fallback and a tool router">
 
-The research tools compare results, produce a short survey, list research gaps and limitations, and compare reference years. Several tools use the curated records in [`data/paper_facts.json`](data/paper_facts.json). The PDF retrieval pipeline also includes eight curated result/method records to preserve information from tables and key passages.
+## What I found
 
-## Quick start
-
-The existing setup workflow uses **Windows PowerShell, Python 3.11 and Ollama**. Model inference runs locally. Initial setup downloads Python dependencies and the two Ollama models.
-
-### 1. Add the papers
-
-Download the four papers and save them in `Researchs/` using the filenames in the [paper setup guide](Researchs/README.md). The setup script expects these PDFs to be present before it builds the index.
-
-### 2. Set up the environment
-
-Start Ollama, open PowerShell in this project directory, and run:
-
-```powershell
-.\setup.ps1
-```
-
-This creates `.venv`, installs the pinned dependencies, downloads `qwen2.5:1.5b` and `all-minilm`, builds the FAISS index, and generates the demo figures.
-
-### 3. Open the assistant
-
-Interactive command line:
-
-```powershell
-.\run_demo.ps1
-```
-
-Ask a single question:
-
-```powershell
-.\.venv\Scripts\python.exe cli.py -q "How does Fusion-in-Decoder combine evidence from multiple passages?"
-```
-
-Open the Streamlit interface:
-
-```powershell
-.\.venv\Scripts\python.exe -m streamlit run app.py
-```
-
-## Example requests
-
-```text
-How does Fusion-in-Decoder combine evidence from multiple passages?
-Compare the results of all papers and draw a chart.
-Generate a mini survey of the selected papers.
-Find research gaps and future work.
-Compare references by publication year.
-```
-
-The [saved demo outputs](outputs/demo_outputs.md) show examples of the research tools without requiring local model setup.
-
-## Saved project results
-
-The following values come from the existing project run in [`outputs/evaluation_summary.json`](outputs/evaluation_summary.json).
-
-| Measure | Recorded result |
+| Measure | Result |
 | --- | ---: |
-| Top-1 paper retrieval accuracy | 85.00% |
-| Retrieval Hit@3 | 100.00% |
-| Retrieval F1@3 | 85.12% |
-| Tool-routing accuracy, 12 requests | 100.00% |
+| Right paper ranked first | 85% |
+| Right paper in the top three | 100% |
+| In-scope or out-of-scope, held-out questions | 15 of 15 |
+| Tool routing, 12 requests | 12 of 12 (one by keyword fallback) |
+| Answers containing the reference fact, without and with retrieval | 8% → 75% |
+| Token F1, without and with retrieval | 0.10 → 0.71 |
 
-For the 12-question answer comparison:
+- **Retrieval does the heavy lifting.** The model is the same in both rows; only the context changes.
+- **Small models need a safety net.** One of 12 tool calls came back malformed, and the keyword fallback caught it.
+- These are small, hand-made test sets for a four-paper corpus. Containment and token F1 measure overlap with reference answers, not whether every sentence is supported by its citation.
 
-| Measure | Without RAG | With RAG |
-| --- | ---: | ---: |
-| Answer containment | 8.33% | 75.00% |
-| Mean token F1 | 9.72% | 70.83% |
+## Try it
 
-The routing result includes 11 model tool calls and one keyword fallback. These are small, manually assembled evaluation sets for this four-paper corpus. Answer containment and token F1 describe answer matching; they do not establish that every generated statement is supported by its citation.
+Uses Windows PowerShell, Python 3.11 and [Ollama](https://ollama.com); everything runs locally.
 
-## Design choices
-
-- **Local models:** Qwen2.5 1.5B and 384-dimensional `all-minilm` embeddings.
-- **Retrieval:** 80-word chunks, 15-word overlap, three retrieved passages and a configured relevance threshold of 0.47.
-- **Traceability:** page and section metadata accompany chunks; important table and method records also carry source references.
-- **Research comparisons:** paper benchmark values are reported results from their authors. Their model sizes and retrieval budgets differ.
-
-The corpus is configured for these four papers. The structured tools and curated facts are specific to this collection. Reference-year extraction uses a heuristic, and PDF tables and multi-column layouts can require special handling.
-
-## Project structure
-
-```text
-app.py                        Streamlit interface
-cli.py                        Command-line interface
-src/research_assistant/        Retrieval, model client and research tools
-data/                         Curated paper facts and evaluation questions
-Researchs/                    Paper setup guide and local PDFs
-scripts/                      Index building and evaluation scripts
-tests/                        Existing project tests
-outputs/                      Selected figures, results and example outputs
-```
-
-## Existing evaluation commands
-
-With the environment and papers set up:
+1. Save the four papers in `Researchs/` under the names in the [paper setup guide](Researchs/README.md).
+2. Start Ollama and run `.\setup.ps1`. It creates `.venv`, installs the dependencies, pulls `qwen2.5:1.5b` and `all-minilm`, and builds the index.
+3. Ask away:
 
 ```powershell
-.\.venv\Scripts\python.exe scripts\build_index.py
-.\.venv\Scripts\python.exe scripts\run_evaluation.py
-.\.venv\Scripts\python.exe -m pytest -q
+.\run_demo.ps1                                      # interactive command line
+.\.venv\Scripts\python.exe cli.py -q "How does Fusion-in-Decoder combine evidence from multiple passages?"
+.\.venv\Scripts\python.exe -m streamlit run app.py  # web interface
 ```
 
-The original implementation, Persian write-up and recorded results are retained alongside this portfolio introduction.
+To rerun the evaluation: `scripts\build_index.py`, then `scripts\run_evaluation.py`.
+
+## Layout
+
+| Path | What's there |
+| --- | --- |
+| [`src/research_assistant/`](src/research_assistant/) | Retrieval, model client and research tools |
+| [`app.py`](app.py) · [`cli.py`](cli.py) | Streamlit and command-line interfaces |
+| [`data/`](data/) | Curated paper facts and evaluation questions |
+| [`outputs/`](outputs/) | Figures, evaluation results and example outputs |
+
+Data mining course project, University of Isfahan, 2026.
