@@ -8,7 +8,8 @@
 
 ## What I did
 
-- Indexed four retrieval papers (REALM, DPR, RAG, FiD): section-aware PDF extraction with PyMuPDF, then 488 chunks of 80 words with 15 words of overlap.
+- Indexed four retrieval papers (REALM, DPR, RAG, FiD): section-aware PDF extraction with PyMuPDF, then 480 chunks of 80 words with 15 words of overlap.
+- Added eight hand-checked records to the index, a method summary and the Natural Questions score for each paper, each tied to its PDF page, because text extraction scrambles multi-column tables.
 - Embedded the chunks locally (`all-minilm`, 384 dimensions) into FAISS and retrieved the top three by cosine similarity.
 - Answered with Qwen2.5 1.5B through Ollama, citing PDF pages. Questions outside the papers fall back to a clearly labelled general answer, past a calibrated similarity threshold.
 - Routed requests to six research tools (compare results, write a mini survey, list research gaps, compare reference years and more), with a keyword fallback when the model's tool call is invalid.
@@ -29,7 +30,7 @@
 
 - **Retrieval does the heavy lifting.** The model is the same in both rows; only the context changes.
 - **Small models need a safety net.** One of 12 tool calls came back malformed, and the keyword fallback caught it.
-- These are small, hand-made test sets for a four-paper corpus. Containment and token F1 measure overlap with reference answers, not whether every sentence is supported by its citation.
+- These are small, hand-made test sets for a four-paper corpus, and 8 of the 12 reference answers also sit in the hand-checked records. Containment and token F1 measure overlap with reference answers, not whether every sentence is supported by its citation.
 
 ## Try it
 
